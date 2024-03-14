@@ -1,0 +1,115 @@
+exp_name: Bi-Causal
+
+
+# -- Dataset settings
+dataset_name: collective
+dataset_dir: /home/nfs/zyl/data/collective
+joints_folder_name: joints
+tracklets_file_name: tracks_normalized.pkl
+person_action_label_file_name: tracks_normalized_with_person_action_label.pkl
+
+horizontal_flip_augment: True
+horizontal_flip_augment_purturb: True
+horizontal_move_augment: True
+horizontal_move_augment_purturb: True
+vertical_move_augment: True
+vertical_move_augment_purturb: True
+agent_dropout_augment: True
+
+image_h: 480
+image_w: 800
+num_classes: 4
+num_person_action_classes: 5
+frame_start_idx: 0
+frame_end_idx: 10
+frame_sampling: 1
+N: 13
+J: 17
+T: 10
+G: 2
+recollect_stats_train: True
+
+
+# -- Training settings
+seed: -1
+batch_size: 128
+num_epochs: 200
+num_workers: -1
+optimizer: 'adam'
+learning_rate: 0.002
+weight_decay: 0.002
+
+
+# -- Learning objective settings
+loss_coe_relation: 2
+loss_coe_group: 1
+loss_coe_inter: 2
+loss_coe_last_TNT: 3
+loss_coe_person: 1
+use_group_activity_weights: True
+use_person_action_weights: True
+
+
+# -- Contrastive cluster assignment
+nmb_prototypes: 1000
+temperature: 0.1
+sinkhorn_iterations: 3
+loss_coe_constrastive_clustering: 1
+
+
+# -- Model settings
+model_type: bi-causal
+group_person_frame_idx: 5
+joint_initial_feat_dim: 8
+joint_wo_coords_dim: 2
+num_gcn_layers: 3
+max_num_tokens: 10
+max_times_embed: 100
+time_position_embedding_type: absolute_learned_1D 
+max_image_positions_h: 1000
+max_image_positions_w: 1500
+image_position_embedding_type: learned_fourier_2D
+# ------ Multiscale Transformer settings
+projection_batchnorm: False
+projection_dropout: 0
+hidden_dim: 128
+trans_layers: 2
+innerTx_nhead: 2 
+innerTx_dim_feedforward: 1024
+innerTx_dropout: 0.5
+innerTx_activation: relu 
+middleTx_nhead: 2
+middleTx_dim_feedforward: 1024
+middleTx_dropout: 0.2
+middleTx_activation: relu 
+outerTx_nhead: 2
+outerTx_dim_feedforward: 1024
+outerTx_dropout: 0.2
+outerTx_activation: relu 
+groupTx_nhead: 2
+groupTx_dim_feedforward: 1024
+groupTx_dropout: 0
+groupTx_activation: relu 
+# ------ Final classifier settings
+classifier_use_batchnorm: True
+classifier_dropout: 0
+
+
+
+# -- Runtime settings
+gpu:
+  - 0
+#  - 1
+#   - 2
+#   - 3
+#   - 4
+#   - 5
+#   - 6
+#   - 7
+dev: 0
+  
+  
+# -- Output settings
+checkpoint_dir: ./checkpoints/
+log_dir: ./logs/
+
